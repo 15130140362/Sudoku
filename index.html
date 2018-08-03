@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>拼图</title>
+<style type="text/css">
+*{
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+#box {
+	width: 1088px;
+	height: 1920px;
+	position: relative;
+	border: 1px solid #ccc;
+}
+	.pic{
+		width: auto;
+		margin: 16px auto 16px;
+		text-align:center; 
+	}
+	.pic>div {
+	display: inline-block;
+}
+
+	
+	
+	#box .pj, #box .p2, #box .p3 {
+	top: 0px;
+}
+	#box .p4, #box .p5, #box .p6 {
+	top: 640px;
+}
+	#box .p7, #box .p8, #box .p9 {
+	top: 1280px;
+}
+	#box .pj, #box .p4, #box .p7 {
+	left: 0px;
+}
+	#box .p2, #box .p5, #box .p8 {
+	left: 363px;
+}
+	#box .p3, #box .p6, #box .p9 {
+	left: 725px;
+}
+	#button {
+	width:600px;
+	heiht:120px;
+	padding: 20px;
+	color: #fff;
+	background: #574a4a;
+	border-radius: 8px;
+	margin: 0 auto;
+	display: block;
+}
+	#box .pj, #box .p2, #box .p3, #box .p4, #box .p5, #box .p6, #box .p7, #box .p8, #box .p9 {
+	position: absolute;
+}
+	#output {
+	text-align:center; 
+	width: 300px;
+	height: 300px;
+	margin-left: 50px;
+}
+	#output img {
+	height: 1000px;
+	width: 600px;
+	float: right;
+	border: 1px solid #ccc;
+	}
+/*	*/
+	.time, .bu {
+	width: 1000px;
+	height: 90px;
+	clear: both;
+	text-align: center;
+	line-height: 60px;
+	border: 1px solid #574a4a;
+	margin: 10px auto;
+	border-radius: 4px;
+}
+	
+/*设置文本的大小*/
+	.bu p{
+		font-weight: 900;
+		font-size: 80px;
+	}
+	.time p{
+		font-weight: 900;
+		font-size: 80px;
+	}
+	/*设置按钮上的字体的大小*/
+	input{
+		font-size:80px;
+	}
+	
+	#output{
+		position:absolute;
+		left:4300px;
+		top:500px;
+	}
+	h2{
+		position: absolute;
+		left:4050px;
+		top:300px;
+		font-size:150px;
+	}
+	</style>
+</head>
+<body>
+<div class="pic">
+<div id="box">
+	<img class="pj" src="images/P80103-150848_01.gif">
+	<img class="p2" src="images/P80103-150848_02.gif">
+	<img class="p3" src="images/P80103-150848_03.gif">
+	<img class="p4" src="images/P80103-150848_04.gif">
+	<img class="p5" src="images/P80103-150848_05.gif">
+	<img class="p6" src="images/P80103-150848_06.gif">
+    <img class="p7" src="images/P80103-150848_07.gif">
+    <img class="p8" src="images/P80103-150848_08.gif">
+    <img class="p9" src="images/P80103-150848_09.gif">
+</div>
+</div>
+<div id="output"><img alt="杜倩" src="images/P80103-150848.jpg"></div>
+<div class="time">
+  <p>英雄，您已经作战了<span>0</span>秒</p>
+</div>
+<div class="bu">
+   <p>英雄，您已经走了<span>0</span>步</p>
+</div>
+	<input type="button" id="button" value="开始游戏">
+	<h2>目标照片</h2>
+<script src="src/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		
+		var tt=0;
+		var time=0;
+		//游戏完成的时间
+		var times=0;
+		var src= Array();
+		src.push("images/P80103-150848_0.gif");
+		src.push("images/P80103-150848_02.gif");
+	    src.push("images/P80103-150848_03.gif");
+		src.push("images/P80103-150848_04.gif");
+		src.push("images/P80103-150848_05.gif");
+		src.push("images/P80103-150848_06.gif");
+		src.push("images/P80103-150848_07.gif");
+		src.push("images/P80103-150848_08.gif");
+		src.push("images/P80103-150848_09.gif");
+         
+		$("#button").click(function(){
+			clearInterval(tt);
+			time=0;
+			times=0;
+			//显示时间的变化
+			tt=setInterval(show_time,1000);
+			function show_time(){
+				time++;
+				$(".time>p>span").text(time);
+			}
+		  
+          
+			//将原来的box设置为有一个白色照片的
+            $("#box     img").eq(0).attr("src",String(src[0]));
+			$("#box     img").eq(1).attr("src",String(src[4]));
+			$("#box     img").eq(2).attr("src",String(src[2]));
+			$("#box     img").eq(3).attr("src",String(src[1]));
+			$("#box     img").eq(4).attr("src",String(src[3]));
+            $("#box     img").eq(5).attr("src",String(src[7]));
+			$("#box     img").eq(6).attr("src",String(src[5]));
+			$("#box     img").eq(7).attr("src",String(src[6]));
+			$("#box     img").eq(8).attr("src",String(src[8]));
+			var arrays=document.getElementById("box").getElementsByTagName("img");
+			for(var i=0;i<arrays.length;i++)
+				{
+					arrays[i].onclick=function(){
+						changeP(this,arrays);
+					}
+				}
+			
+		})
+		function changeP(ob,arr)
+		{
+            var Ni=0;
+			var Nj=0;
+			for(var i=0;i<arr.length;i++)
+				{
+					if(arr[i]==ob)
+						{
+							//alert(i);
+							Ni=i;
+						}
+					if(arr[i].getAttribute("src")=="images/P80103-150848_0.gif")
+						{
+							//alert("Nj:"+i);
+							Nj=i;
+							//空白照片的位置
+						}
+				}
+			
+			if(Math.abs(Ni-Nj)==3)
+				{
+					var temp=ob.getAttribute("src");
+					ob.setAttribute("src","images/P80103-150848_0.gif")
+					arr[Nj].setAttribute("src",temp);
+			        times++;
+                    ifright();
+				}else if((Ni-Nj)==1&&(Ni%3)!=0)
+					{
+						  var temperOb=ob.getAttribute("src"); 
+              ob.setAttribute("src","images/P80103-150848_0.gif");
+              arr[Nj].setAttribute("src",temperOb);
+              times++;
+              ifright();
+					}else if((Ni-Nj)==-1&&(Ni%3)!=2)
+					{
+              var temperOb=ob.getAttribute("src"); 
+              ob.setAttribute("src","images/P80103-150848_0.gif");
+              arr[Nj].setAttribute("src",temperOb);
+              times++;
+              ifright();
+             } 
+			$(".bu>p>span").text(times) 
+		}
+		
+         function ifright(){
+            var ps=document.getElementById("box");
+            var Arrps=ps.getElementsByTagName("img");
+             for(var i=0;i<src.length;i++){
+              if(src[i]!=Arrps[i].getAttribute("src")) return;
+             }
+             alert("恭喜，你成功了。。"+"\n"+"用了"+times+"步")
+          }
+
+		
+		
+	})
+	</script>
+</body>
+</html>
